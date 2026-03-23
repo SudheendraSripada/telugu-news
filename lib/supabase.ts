@@ -1,0 +1,78 @@
+import { createClient } from '@supabase/supabase-js'
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+export interface Article {
+  id: number
+  title: string
+  title_telugu: string
+  summary: string
+  summary_telugu: string
+  content: string
+  slug: string
+  source_url: string
+  source_name: string
+  cover_image_url: string
+  is_breaking: boolean
+  is_published: boolean
+  category_id: number
+  published_at: string
+  created_at: string
+  categories?: { name: string; slug: string; color: string }
+}
+
+export interface BreakingNews {
+  id: number
+  headline: string
+  headline_telugu: string
+  link_url: string
+  is_active: boolean
+}
+
+export async function getArticles(limit = 20) {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('*, categories(name, slug, color)')
+    .eq('is_published', true)
+    .order('published_at', { ascending: false })
+    .limit(limit)
+  if (error) { console.error(error); return [] }
+  return data as Article[]
+}
+
+export async function getArticlesByCategory(slug: string, limit = 12) {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('*, categories!inner(name, slug, color)')
+    .eq('categories.slug', slug)
+    .eq('is_published', true)
+    .order('published_at', { ascending: false })
+    .limit(limit)
+  if (error) { console.error(error); return [] }
+  return data as Article[]
+}
+
+export async function getArticleBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('articles')
+    .select('*, categories(name, slug, color)')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single()
+  if (error) return null
+  return data as Article
+}
+
+export async function getBreakingNews() {
+  const { data, error } = await supabase
+    .from('breaking_news')
+    .select('*')
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
+    .limit(10)
+  if (error) return []
+  return data as BreakingNews[]
+}
