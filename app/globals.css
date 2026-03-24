@@ -1,13 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600&family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
-:root {
-  --red:#C8102E;--red-dark:#a00d24;--gold:#D4AF37;
-  --ink:#0f0f0f;--paper:#faf8f4;--muted:#6b6560;
-  --muted-light:#9a9490;--border:#e0d8ce;--white:#ffffff;--section-bg:#f2ede5;
-  --font-display:'Playfair Display',Georgia,serif;
-  --font-body:'Source Sans 3',sans-serif;
-  --font-telugu:'Noto Sans Telugu',sans-serif;
-}
+:root{--red:#C8102E;--red-dark:#a00d24;--gold:#D4AF37;--ink:#0f0f0f;--paper:#faf8f4;--muted:#6b6560;--muted-light:#9a9490;--border:#e0d8ce;--white:#ffffff;--section-bg:#f2ede5;--font-display:'Playfair Display',Georgia,serif;--font-body:'Source Sans 3',sans-serif;--font-telugu:'Noto Sans Telugu',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 a:hover{color:var(--red)}
